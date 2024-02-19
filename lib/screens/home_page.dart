@@ -2,7 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:news_api_task/models/article.dart';
 import 'package:news_api_task/utils/api_service.dart';
-import 'package:news_api_task/utils/article_service.dart';
+import 'package:news_api_task/utils/articles_service.dart';
+import 'package:news_api_task/widgets/article_card.dart';
 import 'package:news_api_task/widgets/article_card_shimmer.dart';
 import 'package:news_api_task/widgets/article_list_view.dart';
 
@@ -66,17 +67,33 @@ class _HomePageState extends State<HomePage> {
           StreamBuilder<List<Article>>(
             stream: _articleService.articleStream,
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ArticlesListView(articles: snapshot.data!);
-              } else if (snapshot.hasError) {
-                return const Center(child: Text('Error loading articles'));
-              } else {
+              if (snapshot.connectionState == ConnectionState.waiting) {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
-                        (context, index) => const ShimmerArticleCard(),
+                    (context, index) => const ShimmerArticleCard(),
                     childCount: 5,
                   ),
                 );
+              } else if (snapshot.hasData && _articleService.hasMoreData) {
+                print('not reached the end');
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      if (index >= snapshot.data!.length - 5) {
+                        // Load more before reaching end
+                        _articleService.fetchArticles();
+                      }
+                      return ArticleCard(
+                          article: snapshot.data![index]); // or your list view
+                    },
+                    childCount: snapshot.data!.length,
+                  ),
+                );
+              } else if (snapshot.hasData) {
+                print('reached the end');
+                return ArticlesListView(articles: snapshot.data!);
+              } else {
+                return const Center(child: Text('Error loading articles'));
               }
             },
           ),

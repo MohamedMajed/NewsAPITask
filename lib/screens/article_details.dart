@@ -14,7 +14,7 @@ class ArticleDetailPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text('Article Details'),
-        backgroundColor: Colors.indigoAccent,
+        backgroundColor: Colors.blueAccent,
       ),
       body: FutureBuilder<bool>(
         future: Future.delayed(Duration(seconds: 2), () => true),
