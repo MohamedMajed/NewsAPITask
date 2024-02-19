@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:news_api_task/models/article.dart';
+import 'package:news_api_task/screens/article_details.dart';
 import 'package:news_api_task/utils/api_service.dart';
 import 'package:news_api_task/utils/articles_service.dart';
 import 'package:news_api_task/widgets/article_card.dart';
 import 'package:news_api_task/widgets/article_card_shimmer.dart';
-import 'package:news_api_task/widgets/article_list_view.dart';
+import 'package:news_api_task/widgets/article_item.dart';
 
 enum NetworkStatus { loading, loaded, error }
 
@@ -83,15 +84,21 @@ class _HomePageState extends State<HomePage> {
                         // Load more before reaching end
                         _articleService.fetchArticles();
                       }
-                      return ArticleCard(
-                          article: snapshot.data![index]); // or your list view
+                      return ArticleItem(article: snapshot.data![index]); // or your list view
                     },
                     childCount: snapshot.data!.length,
                   ),
                 );
               } else if (snapshot.hasData) {
                 print('reached the end');
-                return ArticlesListView(articles: snapshot.data!);
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                      return ArticleItem(article: snapshot.data![index]); // or your list view
+                    },
+                    childCount: snapshot.data!.length,
+                  ),
+                );
               } else {
                 return const Center(child: Text('Error loading articles'));
               }
