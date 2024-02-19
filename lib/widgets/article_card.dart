@@ -35,10 +35,16 @@ class _ArticleCardState extends State<ArticleCard> {
                       return child;
                     } else {
                       return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                              : null,
+                        child: Container(
+                          width: double.infinity,
+                          height: 200.0,
+                          child: Center(
+                            child: CircularProgressIndicator.adaptive(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          ),
                         ),
                       );
                     }
