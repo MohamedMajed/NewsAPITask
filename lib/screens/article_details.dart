@@ -12,6 +12,7 @@ class ArticleDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Article Details'),
         backgroundColor: Colors.indigoAccent,
       ),
@@ -119,7 +120,7 @@ class ArticleDetailPage extends StatelessWidget {
             Text(
               article.title,
               style: TextStyle(
-                fontSize: 36,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -129,7 +130,7 @@ class ArticleDetailPage extends StatelessWidget {
             Text(
               article.content ??
                   'The online community has flooded X with Sora memes. The world of technology is an ever-evolving field, bustling with inventions. In fact, the power of Artificial Intelligence (AI) is being explored … [+2998 chars]',
-              style: TextStyle(fontSize: 18, color: Colors.grey),
+              style: TextStyle(fontSize: 18, color: Colors.black54),
             ),
             SizedBox(height: 16),
             Text(

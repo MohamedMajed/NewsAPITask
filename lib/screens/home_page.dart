@@ -1,16 +1,12 @@
-import 'dart:developer';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:news_api_task/models/article.dart';
-import 'package:news_api_task/screens/article_details.dart';
 import 'package:news_api_task/utils/api_service.dart';
-import 'package:dio/dio.dart';
-import 'package:news_api_task/widgets/article_card.dart';
+import 'package:news_api_task/utils/article_service.dart';
 import 'package:news_api_task/widgets/article_card_shimmer.dart';
 import 'package:news_api_task/widgets/article_list_view.dart';
-import 'package:shimmer/shimmer.dart';
 
-enum NetworkStatus { loaded, loading, error, idle }
+enum NetworkStatus { loading, loaded, error }
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,35 +14,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Article> articles = [];
-
-  final ApiService apiService = ApiService(Dio());
-
-  NetworkStatus networkStatus = NetworkStatus.idle;
-
+  final ArticleService _articleService = ArticleService(ApiService(Dio()));
 
   @override
   void initState() {
     super.initState();
-    _loadArticles();
+    _articleService.fetchArticles();
   }
 
-  void _loadArticles() async {
-    try {
-      networkStatus = NetworkStatus.loading;
-      List<Article> fetchedArticles = await apiService.getArticles();
-
-      setState(() {
-        articles = fetchedArticles;
-        networkStatus = NetworkStatus.loaded;
-      });
-    } catch (e) {
-      print('Failed to load articles: $e');
-      log('Failed to load articles: $e');
-      networkStatus = NetworkStatus.error;
-    }
+  @override
+  void dispose() {
+    _articleService.dispose();
+    super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -83,29 +63,23 @@ class _HomePageState extends State<HomePage> {
               height: 10,
             ),
           ),
-          networkStatus == NetworkStatus.loading ||
-                  networkStatus == NetworkStatus.idle
-              ? SliverList(
+          StreamBuilder<List<Article>>(
+            stream: _articleService.articleStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ArticlesListView(articles: snapshot.data!);
+              } else if (snapshot.hasError) {
+                return const Center(child: Text('Error loading articles'));
+              } else {
+                return SliverList(
                   delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      return const ShimmerArticleCard();
-                    },
+                        (context, index) => const ShimmerArticleCard(),
                     childCount: 5,
                   ),
-                )
-              : (networkStatus == NetworkStatus.error
-                  ? SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return const Center(
-                          child: Text('Error found!'),
-                        );
-                      },
-                      childCount: 1,
-                    ))
-                  : ArticlesListView(
-                      articles: articles,
-                    ))
+                );
+              }
+            },
+          ),
         ],
       ),
     );

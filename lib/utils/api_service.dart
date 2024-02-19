@@ -24,9 +24,7 @@ class ApiService {
       for (var articleModel in articles) {
         Article? article = Article.fromJson(articleModel);
 
-        // if (article.image != null) {
           articlesList.add(article);
-        // }
       }
 
       return articlesList;
