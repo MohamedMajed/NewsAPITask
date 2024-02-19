@@ -5,8 +5,9 @@ import 'package:news_api_task/models/article.dart';
 import 'package:news_api_task/screens/article_details.dart';
 import 'package:news_api_task/utils/api_service.dart';
 import 'package:dio/dio.dart';
-import 'package:news_api_task/widgets//article_card.dart';
+import 'package:news_api_task/widgets/article_card.dart';
 import 'package:news_api_task/widgets/article_card_shimmer.dart';
+import 'package:news_api_task/widgets/article_list_view.dart';
 import 'package:shimmer/shimmer.dart';
 
 enum NetworkStatus { loaded, loading, error, idle }
@@ -19,7 +20,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Article> articles = [];
 
+  final ApiService apiService = ApiService(Dio());
+
   NetworkStatus networkStatus = NetworkStatus.idle;
+
 
   @override
   void initState() {
@@ -43,14 +47,15 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  final ApiService apiService = ApiService(Dio());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        physics: BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
+            centerTitle: true,
             backgroundColor: Colors.blueAccent,
             leading: Icon(
               Icons.article,
@@ -63,7 +68,19 @@ class _HomePageState extends State<HomePage> {
               background: Container(
                 color: Colors.lightBlueAccent,
               ),
-              title: Text('A R T I C L E S   H U B'),
+              title: Text(
+                'A R T I C L E S  H U B',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 10,
             ),
           ),
           networkStatus == NetworkStatus.loading ||
@@ -86,24 +103,8 @@ class _HomePageState extends State<HomePage> {
                       },
                       childCount: 1,
                     ))
-                  : SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ArticleDetailPage(
-                                      article: articles[index]),
-                                ),
-                              );
-                            },
-                            child: ArticleCard(article: articles[index]),
-                          );
-                        },
-                        childCount: articles.length,
-                      ),
+                  : ArticlesListView(
+                      articles: articles,
                     ))
         ],
       ),

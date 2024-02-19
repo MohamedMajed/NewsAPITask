@@ -26,7 +26,7 @@ class SplashScreen extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-      ),girt
+      ),
       nextScreen: HomePage(),
     );
   }
