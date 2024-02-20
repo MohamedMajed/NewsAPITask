@@ -87,7 +87,6 @@ class ArticleDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Display the image
             ClipRRect(
               borderRadius: BorderRadius.circular(12.0),
               child: Image.network(
@@ -126,7 +125,6 @@ class ArticleDetailPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 8),
-            // Wrap the content text in SingleChildScrollView
             const Divider(),
             Text(
               article.content ??

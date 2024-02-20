@@ -25,12 +25,11 @@ class ArticleService {
       List<Article> articles = await apiService.getArticles(page: _currentPage, pageSize: _pageSize);
       myArticles = myArticles + articles;
       hasMoreData = articles.length == _pageSize;
-      // Update state based on response
+
       _isLoadingMore = false;
       _currentPage++;
 
-      // Add/append articles to existing list
-      _articleController.add(myArticles); // Use stream.value
+      _articleController.add(myArticles);
     } catch (e) {
       _articleController.addError(e);
     }

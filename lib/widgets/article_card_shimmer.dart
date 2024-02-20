@@ -13,14 +13,16 @@ class ShimmerArticleCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Display image if data is loaded, otherwise display shimmer
             Shimmer.fromColors(
             baseColor: Colors.grey[300]!,
             highlightColor: Colors.grey[100]!,
-            child: Container(
-              width: double.infinity,
-              height: 200.0,
-              color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                width: double.infinity,
+                height: 250.0,
+                color: Colors.white,
+              ),
             ),
           ),
           Padding(
@@ -34,12 +36,11 @@ class ShimmerArticleCard extends StatelessWidget {
                   highlightColor: Colors.grey[100]!,
                   child: Container(
                     width: double.infinity,
-                    height: 20.0,
+                    height: 80.0,
                     color: Colors.white,
                   ),
                 ),
                 SizedBox(height: 8.0),
-                // Display description if data is loaded, otherwise display shimmer
                   Shimmer.fromColors(
                   baseColor: Colors.grey[300]!,
                   highlightColor: Colors.grey[100]!,

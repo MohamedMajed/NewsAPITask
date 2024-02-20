@@ -6,7 +6,7 @@ class ApiService {
 
   ApiService(this.dio);
 
-  static const String apiKey = '51b329140d344a59bdcebb0978bfb77b';
+  static const String apiKey = '744a3abafb764890949f2ca05f8bbf3e';
   static const String baseUrl = 'https://newsapi.org/v2';
 
   Future<List<Article>> getArticles({int page = 1, int pageSize = 10}) async {
