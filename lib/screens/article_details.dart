@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:news_api_task/models/article.dart';
 import 'package:shimmer/shimmer.dart';
 import 'dart:async';
-
 import 'package:url_launcher/url_launcher.dart';
 
 class ArticleDetailPage extends StatelessWidget {
@@ -135,23 +134,27 @@ class ArticleDetailPage extends StatelessWidget {
               style: TextStyle(fontSize: 18, color: Colors.black54),
             ),
             SizedBox(height: 16),
-            InkWell(
-              onTap: () async {
-                final Uri? url = Uri.tryParse(article.articleUrl!);
-                if (!await launchUrl(url!)) {
-                throw Exception('Could not launch $url');
-                }
-              },
-              child: Text(
-                'Go to article',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.blue,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
+      ElevatedButton(
+        onPressed: () async {
+          final Uri? url = Uri.tryParse(article.articleUrl!);
+          if (url != null) {
+            if (!await launchUrl(url)) {
+              throw Exception('Could not launch $url');
+            }
+          }
+        },
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlueAccent),
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          textStyle: MaterialStateProperty.all<TextStyle>(
+            TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.normal,
             ),
+          ),
+        ),
+        child: Text('Go to article'),
+      ),
           ],
         ),
       ),
