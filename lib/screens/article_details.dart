@@ -67,10 +67,10 @@ class ArticleDetailPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
+              borderRadius: BorderRadius.circular(20.0),
               child: Container(
-                width: 200.0,
-                height: 30.0,
+                width: 140.0,
+                height: 40.0,
                 color: Colors.white,
               ),
             ),
