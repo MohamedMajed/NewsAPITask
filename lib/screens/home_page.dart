@@ -1,10 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:news_api_task/models/article.dart';
-import 'package:news_api_task/screens/article_details.dart';
 import 'package:news_api_task/utils/api_service.dart';
 import 'package:news_api_task/utils/articles_service.dart';
-import 'package:news_api_task/widgets/article_card.dart';
 import 'package:news_api_task/widgets/article_card_shimmer.dart';
 import 'package:news_api_task/widgets/article_item.dart';
 
@@ -81,10 +79,21 @@ class _HomePageState extends State<HomePage> {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       if (index >= snapshot.data!.length - 5) {
-                        // Load more before reaching end
                         _articleService.fetchArticles();
+                        return Column(
+                          children: [
+                            ArticleItem(article: snapshot.data![index]),
+                            if (snapshot.data!.length - index == 1)
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child:
+                                    Center(child: CircularProgressIndicator()),
+                              ),
+                          ],
+                        );
+                      } else {
+                        return ArticleItem(article: snapshot.data![index]);
                       }
-                      return ArticleItem(article: snapshot.data![index]); // or your list view
                     },
                     childCount: snapshot.data!.length,
                   ),
@@ -93,8 +102,8 @@ class _HomePageState extends State<HomePage> {
                 print('reached the end');
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                      return ArticleItem(article: snapshot.data![index]); // or your list view
+                    (context, index) {
+                      return ArticleItem(article: snapshot.data![index]);
                     },
                     childCount: snapshot.data!.length,
                   ),

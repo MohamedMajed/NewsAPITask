@@ -137,8 +137,8 @@ class ArticleDetailPage extends StatelessWidget {
             SizedBox(height: 16),
             InkWell(
               onTap: () async {
-                final Uri url = Uri.parse('https://flutter.dev');
-                if (!await launchUrl(url)) {
+                final Uri? url = Uri.tryParse(article.articleUrl!);
+                if (!await launchUrl(url!)) {
                 throw Exception('Could not launch $url');
                 }
               },
