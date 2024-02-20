@@ -56,14 +56,12 @@ class _HomePageState extends State<HomePage> {
                 title: Container(
                   child: Row(
                     children: [
-                      Icon(Icons.feed, color: Colors.white, size: 16),
-                      SizedBox(width: 4),
                       Text(
                         'BREAKING',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontStyle: FontStyle.italic,
-                          fontSize: 18,
+                          fontSize: 24,
                           color: Colors.red,
                           wordSpacing: 2.0,
                         ),
@@ -74,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
-                            fontSize: 18,
+                            fontSize: 24,
                             color: Colors.amber,
                             letterSpacing: 2.0
                         ),

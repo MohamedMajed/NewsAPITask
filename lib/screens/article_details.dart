@@ -18,7 +18,7 @@ class ArticleDetailPage extends StatelessWidget {
         backgroundColor: Colors.blueAccent,
       ),
       body: FutureBuilder<bool>(
-        future: Future.delayed(Duration(seconds: 2), () => true),
+        future: Future.delayed(Duration(seconds: 1), () => true),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return _buildShimmer();
