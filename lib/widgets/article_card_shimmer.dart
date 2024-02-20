@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:news_api_task/models/article.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmerArticleCard extends StatelessWidget {

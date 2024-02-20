@@ -11,7 +11,6 @@ class ApiService {
 
   Future<List<Article>> getArticles({int page = 1, int pageSize = 10}) async {
     try {
-      await Future.delayed(Duration(seconds: 2));
       var response = await dio.get(
           '$baseUrl/top-headlines?country=us&apiKey=$apiKey&page=$page&pageSize=$pageSize');
 
