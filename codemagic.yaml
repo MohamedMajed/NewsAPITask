@@ -34,8 +34,12 @@ workflows:
 
 
     artifacts:
+      - build/**/outputs/apk/**/*.apk
       - build/**/outputs/**/*.aab
       - build/**/outputs/**/mapping.txt
+      - build/ios/ipa/*.ipa
+      - build/macos/**/*.pkg
+      - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
     publishing:
       email:
