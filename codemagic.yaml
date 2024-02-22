@@ -44,5 +44,6 @@ workflows:
     publishing:
       email:
         recipients:
-          - mohamedmaged.live@gmail.com
           - khalifahm@extendad.com
+          - mohamedmaged.live@gmail.com
+          - mhmh9711@gmail.com

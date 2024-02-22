@@ -61,8 +61,8 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontStyle: FontStyle.italic,
-                          fontSize: 24,
-                          color: Colors.red,
+                          fontSize: 20,
+                          color: Colors.white,
                           wordSpacing: 2.0,
                         ),
                       ),
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
-                            fontSize: 24,
+                            fontSize: 20,
                             color: Colors.amber,
                             letterSpacing: 2.0
                         ),
